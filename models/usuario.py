@@ -7,3 +7,13 @@ class Usuario(BaseModel):
      Usu_Telefono: conint(gt=1000000, le=9999999999)
      Rol_Id: conint(gt=0, le=9999999999)
      TpDoc_Id: constr(min_length=1, max_length=10)
+     Usu_Password : constr(min_length=1, max_length=50)
+
+class UsuarioResponse(BaseModel):
+     Usu_Id: int
+     Usu_Nombre: str
+     Usu_Email: str
+     Usu_Telefono: int
+     Rol_Id: int
+     TpDoc_Id: str
+     Usu_Password: str

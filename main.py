@@ -1,12 +1,24 @@
 from optparse import Values
-
 from click import Tuple
 from fastapi import FastAPI, HTTPException
 import mysql.connector
+from starlette.middleware.cors import CORSMiddleware
 from core.connection import connection
-from models.usuario import Usuario
+from models.usuario import Usuario, UsuarioResponse
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:4200",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/')
 def root():
@@ -34,18 +46,27 @@ async def get_usuarios():
 async def get_usuario(id):
     cursor = connection.cursor()
 
-    query = "SELECT * FROM Usuarios WHERE Usu_Id = %s"
+    query = "SELECT Usu_Id, Usu_Nombre, Usu_Email, Usu_Telefono, Rol_Id, TpDoc_Id, Usu_Password FROM Usuarios WHERE Usu_Id = %s"
     values = id
 
     try:
-        cursor.execute(query, tuple(values))
+        cursor.execute(query, [values])
         usuario = cursor.fetchone()
-        return usuario
+
+        return UsuarioResponse(
+            Usu_Id=usuario[0],
+            Usu_Nombre=usuario[1],
+            Usu_Email=usuario[2],
+            Usu_Telefono=usuario[3],
+            Rol_Id=usuario[4],
+            TpDoc_Id=usuario[5],
+            Usu_Password=usuario[6],
+        )
 
     except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Error de mysql : {err}")
+        raise HTTPException(status_code=500, detail=f"Error de mysql 1: {err}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error de mysql : {e}")
+        raise HTTPException(status_code=404, detail=f"Usuario no encontrado: {e}")
     finally:
         cursor.close()
 
