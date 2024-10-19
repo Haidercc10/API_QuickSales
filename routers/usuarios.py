@@ -25,7 +25,7 @@ async def get_usuarios():
         cursor.close()
 
 ## Get user
-@router.get('/usuario/{id}')
+@router.get('/usuarios/{id}')
 async def get_usuario(id):
     cursor = connection.cursor()
 
@@ -54,11 +54,11 @@ async def get_usuario(id):
         cursor.close()
 
 ## Create user
-@router.post('/usuario')
+@router.post('/usuarios')
 async def post_usuario(usu : Usuario) :
     cursor = connection.cursor()
-    query = "INSERT INTO Usuarios(Usu_Id, Usu_Nombre, Usu_Email, Usu_Telefono, Rol_Id, TpDoc_Id) VALUES(%s, %s, %s, %s, %s, %s)"
-    values = (usu.Usu_Id, usu.Usu_Nombre, usu.Usu_Email, usu.Usu_Telefono, usu.Rol_Id, usu.TpDoc_Id)
+    query = "INSERT INTO Usuarios(Usu_Id, Usu_Nombre, Usu_Email, Usu_Telefono, Rol_Id, TpDoc_Id, Usu_Password) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    values = (usu.Usu_Id, usu.Usu_Nombre, usu.Usu_Email, usu.Usu_Telefono, usu.Rol_Id, usu.TpDoc_Id, usu.Usu_Password)
 
     try:
         cursor.execute(query, values)
@@ -72,7 +72,7 @@ async def post_usuario(usu : Usuario) :
         cursor.close()
 
 ## Update user
-@router.put('/usuario/{id}')
+@router.put('/usuarios/{id}')
 async def put_usuario(id:int, usu : Usuario) :
     cursor = connection.cursor()
     query = ("UPDATE Usuarios " 
@@ -80,9 +80,10 @@ async def put_usuario(id:int, usu : Usuario) :
              "Usu_Email = %s, "
              "Usu_Telefono = %s, "
              "Rol_Id = %s, "
-             "TpDoc_Id = %s "
+             "TpDoc_Id = %s, "
+             "Usu_Password = %s "
              "WHERE Usu_Id = %s")
-    values = (usu.Usu_Nombre, usu.Usu_Email, usu.Usu_Telefono, usu.Rol_Id, usu.TpDoc_Id, id)
+    values = (usu.Usu_Nombre, usu.Usu_Email, usu.Usu_Telefono, usu.Rol_Id, usu.TpDoc_Id, usu.Usu_Password, id)
 
     try:
         cursor.execute(query, tuple(values))
@@ -96,14 +97,14 @@ async def put_usuario(id:int, usu : Usuario) :
         cursor.close()
 
 ## Delete user
-@router.delete('/usuario/{id}')
-async def delete_usuario(id) :
+@router.delete('/usuarios/{id}')
+async def delete_usuario(id : int) :
     cursor = connection.cursor()
     query = "DELETE FROM Usuarios WHERE Usu_Id = %s"
-    values = id
+    values = (id, )
 
     try:
-        cursor.execute(query, (values))
+        cursor.execute(query, values)
         connection.commit()
         return { "message" : f"Usuario eliminado exitosamente!" }
     except mysql.connector.Error as err:

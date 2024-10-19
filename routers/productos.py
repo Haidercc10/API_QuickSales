@@ -99,10 +99,10 @@ async def put_producto(id:int, prod : Producto) :
 async def delete_producto(id) :
     cursor = connection.cursor()
     query = "DELETE FROM Productos WHERE Prod_Id = %s"
-    values = id
+    values = (id,)
 
     try:
-        cursor.execute(query, (values))
+        cursor.execute(query, values)
         connection.commit()
         return { "message" : f"Producto eliminado exitosamente!" }
     except mysql.connector.Error as err:
