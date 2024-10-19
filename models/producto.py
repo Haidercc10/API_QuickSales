@@ -3,7 +3,7 @@ from decimal import Decimal
 from pydantic import BaseModel, constr, conint, Field
 
 class Producto(BaseModel):
-     Prod_Id : conint(gt=0, le=9999999999)
+     Prod_Id : conint(ge=0, le=9999999999)
      Prod_Nombre : constr(min_length=1, max_length=100)
      Prod_Descripcion : constr(min_length=1, max_length=100)
      Prod_Medida : constr(min_length=1, max_length=50)
@@ -11,7 +11,7 @@ class Producto(BaseModel):
      Und_Id : constr(min_length=1, max_length=10)
 
 class ProductoResponse(BaseModel):
-     Prod_Id : conint(gt=0, le=9999999999)
+     Prod_Id : conint(ge=0, le=9999999999)
      Prod_Nombre : constr(min_length=1, max_length=100)
      Prod_Descripcion : constr(min_length=1, max_length=100)
      Prod_Medida : constr(min_length=1, max_length=50)
