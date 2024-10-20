@@ -2,10 +2,12 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import routers.usuarios
 import routers.productos
+import routers.roles
 
 app = FastAPI()
 app.include_router(routers.usuarios.router)
 app.include_router(routers.productos.router)
+app.include_router(routers.roles.router)
 
 origins = [
     "http://localhost:4200",
