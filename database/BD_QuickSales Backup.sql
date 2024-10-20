@@ -112,7 +112,7 @@ CREATE TABLE `roles` (
   `Rol_Nombre` varchar(50) NOT NULL,
   `Rol_Descripcion` varchar(50) NOT NULL,
   PRIMARY KEY (`Rol_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,6 +121,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'ADMIN','ADMINISTRADOR');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +225,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (85125948,'Cesar Cantillo','cantillocesar16@gmail.com',321810806,1,'CC','123456');
+INSERT INTO `usuarios` VALUES (32858202,'BENILDA COLON','benildacs28@gmail.com',300300300,1,'CC','123456'),(1048322496,'Haider Cantillo','cantillohaider10@gmail.com',30139566,1,'CC','123456');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-19 18:24:35
+-- Dump completed on 2024-10-19 23:30:51
