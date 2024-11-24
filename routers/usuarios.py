@@ -96,20 +96,5 @@ async def put_usuario(id:int, usu : Usuario) :
     finally:
         cursor.close()
 
-## Delete user
-@router.delete('/usuarios/{id}')
-async def delete_usuario(id : int) :
-    cursor = connection.cursor()
-    query = "DELETE FROM Usuarios WHERE Usu_Id = %s"
-    values = (id, )
 
-    try:
-        cursor.execute(query, values)
-        connection.commit()
-        return { "message" : f"Usuario eliminado exitosamente!" }
-    except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Error al eliminar usuario {err}")
-    except ValueError as e:
-        raise HTTPException(status_code=403, detail=f"Error de tipado al eliminar usuario {e}")
-    finally:
-        cursor.close()
+

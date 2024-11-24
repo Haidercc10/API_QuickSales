@@ -1,9 +1,8 @@
+from pydantic import conint, constr, BaseModel
 from sqlalchemy import Column, Integer, String
 from core.config_bd import Base
 
-class Login(Base):
-    __tablename__ = "usuarios"
+class Login(BaseModel):
+    Usu_Id: conint(ge=10000, le=9999999999)
+    Usu_Password : constr(min_length=1, max_length=50)
 
-    Usua_Id = Column(Integer, primary_key = True, index=False)
-    Usua_Password = Column(String(50))
-    Rol_Id = Column(Integer)
