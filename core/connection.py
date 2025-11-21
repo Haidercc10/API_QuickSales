@@ -4,7 +4,7 @@ mysql_config = {
     'host' : 'localhost',
     'user' : 'root',
     'database' : 'BD_QuickSales',
-    'password' : 'Ha061096**',
+    'password' : 'Haidercc10**',
     'auth_plugin' : 'mysql_native_password'
 }
 
