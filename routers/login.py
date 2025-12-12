@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from core.config_bd import get_db
 from models.login import Login
 from models.usuario import Usuario
+from core.config import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
 
@@ -16,13 +17,13 @@ users = {
     1048322496 : { "Usu_Id" : 1048322496, "Usu_Password" : "123456" }
 }
 
-def encode_token(payload: dict) -> str:
+""""def encode_token(payload: dict) -> str:
     token = jwt.encode(payload, key="secret", algorithm="HS256")
-    return token
+    return token"""
 
-def decode_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
+""""def decode_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
     data = jwt.decode(token, key="secret", algorithms=["HS256"])
-    return data
+    return data """
 
 
 @router.post('/login_json')
