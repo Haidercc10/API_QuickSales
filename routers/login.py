@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi .exceptions import HTTPException
 from jose import jwt
 from sqlalchemy.orm import Session
+from core.auth import create_token, decode_token
 from core.config_bd import get_db
 from models.login import Login
 from models.usuario import Usuario
@@ -17,34 +18,16 @@ users = {
     1048322496 : { "Usu_Id" : 1048322496, "Usu_Password" : "123456" }
 }
 
-""""def encode_token(payload: dict) -> str:
-    token = jwt.encode(payload, key="secret", algorithm="HS256")
-    return token"""
+@router.post('/login')
+def login(form: Login):
+    user = users.get(form.Usu_Id)
 
-""""def decode_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
-    data = jwt.decode(token, key="secret", algorithms=["HS256"])
-    return data """
+    if not user or user["Usu_Password"] != form.Usu_Password:
+        raise HTTPException(status_code=404, detail="Usuario o contraseña incorrectos")
 
+    token = create_token({ "Usu_Id": user["Usu_Id"] })
 
-@router.post('/login_json')
-def login(form_data: Login):
-    user = users.get(form_data.Usu_Id)
-    if not user:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-
-    token = encode_token({ "Usu_Id": user["Usu_Id"] })
-    return { "access_token": token, "token_type": "bearer" }
-
-""""@router.post('/login')
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    user = users.get(form_data.username)
-    if not user:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-
-    token = encode_token({ "username": user["username"] })
-    return { "access_token": token, "token_type": "bearer" }"""
-
-@router.get('/login/profile')
-def profile(my_user: Annotated[dict, Depends(decode_token)]):
-    return  my_user
-
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }
