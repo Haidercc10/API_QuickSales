@@ -10,7 +10,10 @@ from models.login import Login
 from models.usuario import Usuario
 from core.config import SECRET_KEY, ALGORITHM
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/login",
+    tags=["Login"]
+)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
