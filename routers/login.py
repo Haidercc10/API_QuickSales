@@ -1,14 +1,8 @@
 from fastapi import APIRouter, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from typing import Annotated
+from fastapi.security import OAuth2PasswordBearer
 from fastapi .exceptions import HTTPException
-from jose import jwt
-from sqlalchemy.orm import Session
-from core.auth import create_token, decode_token, get_current_user
-from core.config_bd import get_db
+from core.auth import create_token, get_current_user
 from models.login import Login
-from models.usuario import Usuario
-from core.config import SECRET_KEY, ALGORITHM
 
 router = APIRouter(
     prefix="/login",

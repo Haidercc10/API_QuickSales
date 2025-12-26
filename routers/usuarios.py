@@ -1,9 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from optparse import Values
-from click import Tuple
 import mysql.connector
 from core.connection import connection
-from models.usuario import Usuario, UsuarioResponse
+from schemas.usuario_schema import Usuario, UsuarioResponse
 
 router = APIRouter()
 
@@ -95,6 +93,8 @@ async def put_usuario(id:int, usu : Usuario) :
         raise HTTPException(status_code=403, detail=f"Error de tipado al actualizar usuario {e}")
     finally:
         cursor.close()
+
+##SQL ALCHEMY
 
 
 
