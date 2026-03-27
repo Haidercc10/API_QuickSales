@@ -5,7 +5,6 @@ from core.auth import create_token, get_current_user
 from models.login import Login
 
 router = APIRouter(
-    prefix="/login",
     tags=["Login"]
 )
 

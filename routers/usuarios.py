@@ -1,11 +1,18 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 import mysql.connector
 from core.connection import connection
+from core.config_bd import get_db
 from schemas.usuario_schema import Usuario, UsuarioResponse
+from sqlalchemy.orm import Session
 
-router = APIRouter()
+
+router = APIRouter(
+    ###prefix="/usuarios",
+    tags=["Usuarios"]
+)
 
 ## Get users
+
 @router.get('/usuarios')
 async def get_usuarios():
     cursor = connection.cursor(dictionary=True)
@@ -94,7 +101,13 @@ async def put_usuario(id:int, usu : Usuario) :
     finally:
         cursor.close()
 
-##SQL ALCHEMY
-
+##SQL ALCHEMY##
+@router.post("/post2", response_model=UsuarioResponse)
+def create_user_url(data : Usuario, db: Session = Depends(get_db)):
+    try:
+        user = create_user(db, data)
+        return user
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 

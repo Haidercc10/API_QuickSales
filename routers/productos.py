@@ -1,15 +1,22 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from optparse import Values
 from click import Tuple
 import mysql.connector
 from core.connection import connection
 from models.producto import Producto, ProductoResponse
+from fastapi.security import OAuth2PasswordBearer
+from core.auth import get_current_user
 
-router = APIRouter()
+router = APIRouter(
+    ###prefix="/productos",
+    tags=["Productos"]
+)
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 ## Get products
 @router.get('/productos')
-async def get_productos():
+async def get_productos(user_id: str = Depends(get_current_user)):
     cursor = connection.cursor(dictionary=True)
 
     query = "SELECT * FROM Productos"

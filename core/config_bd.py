@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 load_dotenv(".env")
 
-DATABASE_URL = "mysql+mysqlconnector://root:Ha061096**@localhost/BD_QuickSales"
+DATABASE_URL = "mysql+mysqlconnector://root:Haidercc10**@localhost/BD_QuickSales"
 
 engine = create_engine(DATABASE_URL)
 

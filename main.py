@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-import routers.usuarios
+from routers import usuarios
 import routers.productos
 import routers.roles
 import routers.login
 import uvicorn
+from core.config_bd import Base, engine
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(routers.usuarios.router)
@@ -13,7 +16,7 @@ app.include_router(routers.roles.router)
 app.include_router(routers.login.router)
 
 origins = [
-    "http://localhost:4200",
+    "http://localhost:4200", "http://localhost:4201",
 ]
 
 app.add_middleware(

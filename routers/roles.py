@@ -5,7 +5,9 @@ import mysql.connector
 from core.connection import connection
 from models.rol import Roles, RolesResponse
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Roles"]
+)
 
 ## Get Roles
 @router.get('/roles')
